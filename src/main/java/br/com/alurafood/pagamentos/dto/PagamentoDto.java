@@ -1,5 +1,6 @@
 package br.com.alurafood.pagamentos.dto;
 
+import br.com.alurafood.pagamentos.model.ItemDoPedido;
 import br.com.alurafood.pagamentos.model.Status.Status;
 import lombok.Getter;
 import lombok.Setter;
@@ -9,6 +10,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 import java.math.BigDecimal;
+import java.util.List;
 
 @Getter
 @Setter
@@ -32,8 +34,10 @@ public class PagamentoDto {
 
     private Status status;
 
-    private Long pedidoId;
-
     @NotNull
     private Long formaDePagamentoId;
+
+    private Long pedidoId;
+
+    private List<ItemDoPedido> itens;
 }
