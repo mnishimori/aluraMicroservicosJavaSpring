@@ -3,7 +3,6 @@ package br.com.alurafood.pagamentos.controller;
 import br.com.alurafood.pagamentos.dto.PagamentoDto;
 import br.com.alurafood.pagamentos.service.PagamentoService;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
-import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -32,8 +31,7 @@ public class PagamentoController {
         PagamentoDto pagamento = service.criarPagamento(dto);
         URI endereco = uriBuilder.path("/pagamentos/{id}").buildAndExpand(pagamento.getId()).toUri();
 
-        Message message = new Message(("Criei um pagamento com o ID " + pagamento.getId()).getBytes());
-        rabbitTemplate.send("pagamento.concluido", message);
+        rabbitTemplate.convertAndSend("pagamentos.ex", "", pagamento);
 
         return ResponseEntity.created(endereco).body(pagamento);
     }
