@@ -66,9 +66,4 @@ public class PagamentoController {
     public void confirmarPagamento(@PathVariable @NotNull Long id){
         service.confirmarPagamento(id);
     }
-
-    public void pagamentoAutorizadoComIntegracaoPendente(@PathVariable @NotNull Long id, Exception e){
-        service.alteraStatus(id);
-    }
-
 }
